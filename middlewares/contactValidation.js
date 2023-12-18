@@ -1,14 +1,14 @@
 const HttpError = require('../helpers/HttpError');
 
 const contactValidation = (schema) => {
-    const validation = (req, res, next) => {
-        const { error } = schema.validate(req.body);
-        if (error) {
-            next(HttpError(404, error.message));
-        }
-        next()
+    const validator = (req, res, next) => {
+    const { error } = schema.validate(req.body);
+    if (error) {
+      next(HttpError(400, error.message));
     }
-    return validation;
+    next();
+  };
+  return validator;
 }
 
 module.exports = contactValidation;
