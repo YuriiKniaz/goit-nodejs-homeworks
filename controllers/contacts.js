@@ -4,21 +4,33 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 const schema = require('../scheme/contact');
 
 const getListContacts = async (req, res) => {
-        const response = await contacts.listContacts();
+try {
+    const response = await contacts.listContacts();
         res.status(200).json(response); 
+} catch (error) {
+    console.log(error);
+}
+
+        
 }
 
 const getById = async (req, res) => {
-    const contactId = req.params.contactId;
+    try {
+        const contactId = req.params.contactId;
     const response = await contacts.getContactById(contactId);
     if (!response) {
          return res.status(404).json({message: 'Not found'});
     }
     res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
 
 const removeById = async (req, res) => {
-    const contactId = req.params.contactId;
+    try {
+        const contactId = req.params.contactId;
     const response = await contacts.removeContact(contactId);
     if (!response) {
          return res.status(404).json({message: 'Not found'});
@@ -26,6 +38,10 @@ const removeById = async (req, res) => {
     res.status(200).json({
         message: 'contact deleted'
     });
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
 
 const addNewContact = async (req, res) => {
@@ -38,7 +54,7 @@ const addNewContact = async (req, res) => {
     const response = await contacts.addContact(req.body)
     res.status(201).json(response);
     } catch (error) {
-       console.log(error)
+        console.log(error);
     }
     
 }
