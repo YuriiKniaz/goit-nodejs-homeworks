@@ -8,10 +8,10 @@ router.get('/', controller.getListContacts);
 
 router.get('/:contactId', controller.getById);
 
-router.post('/', contactValidation(schema.conScheme), controller.addNewContact);
+router.post('/', contactValidation(schema), controller.addNewContact);
 
 router.delete('/:contactId', controller.removeById);
 
-router.put('/:contactId', contactValidation(schema.conScheme), controller.updateContactById);
+router.put('/:contactId', contactValidation(schema), controller.updateContactById);
 
 module.exports = router
