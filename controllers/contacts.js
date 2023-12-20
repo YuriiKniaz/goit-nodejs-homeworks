@@ -69,7 +69,7 @@ try {
     
     const contactId = req.params.contactId;
     const response = await contacts.updateContact(contactId, req.body);
-    if (!response) {
+    if (response !== contactId) {
           res.status(404).json({message: 'Not found'});
           return;
     }
