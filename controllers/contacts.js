@@ -68,12 +68,14 @@ try {
         }
     
     const contactId = req.params.contactId;
+    const searchId = await contacts.getContactById(contactId);
+
     const response = await contacts.updateContact(contactId, req.body);
-    if (response !== contactId) {
+    if (!searchId) {
           res.status(404).json({message: 'Not found'});
           return;
     }
-    res.json(response);
+    res.status(200).json(response);
 } catch (error) {
     console.log(error)
 }
