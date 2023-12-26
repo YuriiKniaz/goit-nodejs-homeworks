@@ -1,7 +1,7 @@
 // const contacts = require('../models/contacts');
 // const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
-const schema = require('../scheme/contact');
+const {conScheme, favoriteScheme} = require('../scheme/contact');
 const Contact = require('../models/contacts');
 
 const getListContacts = async (req, res) => {
@@ -15,7 +15,7 @@ try {
 
 const getById = async (req, res) => {
     try {
-        const contactId = req.params.contactId;
+        const {contactId} = req.params;
         const response = await Contact.findById(contactId);
     if (!response) {
          return res.status(404).json({message: 'Not found'});
@@ -28,8 +28,8 @@ const getById = async (req, res) => {
 
 const removeById = async (req, res) => {
     try {
-        const contactId = req.params.contactId;
-    const response = await Contact.findOneAndDelete({_id: contactId});
+        const {contactId} = req.params;
+    const response = await Contact.findOneAndDelete(contactId);
     if (!response) {
          return res.status(404).json({message: 'Not found'});
     }
@@ -43,7 +43,7 @@ const removeById = async (req, res) => {
 
 const addNewContact = async (req, res) => {
     try {
-        const validationResult = schema.validate(req.body);
+        const validationResult = conScheme.validate(req.body);
         if (validationResult.error) {
              res.status(400).json({message: "missing required name field"});
              return;
@@ -57,13 +57,13 @@ const addNewContact = async (req, res) => {
 
 const updateContactById = async (req, res) => {
 try {
-    const validationResult = schema.validate(req.body);
+    const validationResult = conScheme.validate(req.body);
         if (validationResult.error) {
              res.status(400).json({message: "missing fields"});
              return;
         }
     
-    const contactId = req.params.contactId;
+    const {contactId} = req.params;
     const searchId = await Contact.findById(contactId);
     const response = await Contact.findByIdAndUpdate(contactId, req.body, { new: true });
     
@@ -79,9 +79,9 @@ try {
 
 const updateStatusContact = async (req, res) => {
     try {
-        const contactId = req.params.contactId;
+        const {contactId} = req.params;
         const searchId = await Contact.findById(contactId);
-        const validationResult = schema.validate(req.body);
+        const validationResult = favoriteScheme.validate(req.body);
 
         if (validationResult.error) {
              res.status(400).json({message: "Missing field favorite"});
