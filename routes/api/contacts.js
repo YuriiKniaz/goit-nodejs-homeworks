@@ -17,4 +17,4 @@ router.put('/:contactId', isValid, contactValidation(conScheme), controller.upda
 
 router.patch('/:contactId/favorite', isValid, contactValidation(favoriteScheme), controller.updateStatusContact);
 
-module.exports = router
+module.exports = router;
