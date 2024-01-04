@@ -68,15 +68,15 @@ const logIn = async (req, res) => {
 
 const logOut = async (req, res) => {
     const { _id } = req.user;
-    await User.findByIdAndUpdate(_id, { token: '' });
+    await User.findByIdAndUpdate(_id, { token: "" });
 
-    res.status(204).json('')
+    res.status(204).json()
 }
 
 const current = async (req, res) => {
     const { email, subscription } = req.user;
 
-    res.json({email,subscription})
+    res.status(200).json({email,subscription})
    
 }
 
