@@ -1,25 +1,28 @@
-const { model, Schema } = require('mongoose');
-const handleMongooseError = require('../helpers/handleMongooseError');
+const { model, Schema } = require("mongoose");
+const handleMongooseError = require("../helpers/handleMongooseError");
 
 const usersSchema = new Schema({
   password: {
     type: String,
-    required: [true, 'Set password for user'],
+    required: [true, "Set password for user"],
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
+    required: [true, "Email is required"],
     unique: true,
   },
   subscription: {
     type: String,
     enum: ["starter", "pro", "business"],
-    default: "starter"
+    default: "starter",
   },
-  token: String
-})
+  avatarURL: {
+    type: String,
+  },
+  token: String,
+});
 
-usersSchema.post('save', handleMongooseError);
-const User = model('User', usersSchema);
+usersSchema.post("save", handleMongooseError);
+const User = model("User", usersSchema);
 
 module.exports = User;
