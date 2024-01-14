@@ -82,11 +82,11 @@ const resendVerifyEmail = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(404, { message: "Email not found" });
+      res.status(404).json({ message: "Email not found" });
       return;
     }
-    if (!user.verify) {
-      res.status(400, { message: "Email already verified" });
+    if (user.verify) {
+      res.status(400).json({ message: "Email already verified" });
       return;
     }
 
